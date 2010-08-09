@@ -1,0 +1,28 @@
+commentReportSent:
+  url: /comment-reported
+  param: { module: comment, action: reportSent }
+
+commentReport:
+  url: /report-a-comment/:id/:num
+  param: { module: comment, action: report }
+  requirements:
+    id: \d+
+    num: \d+
+
+commentReportAdmin:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                CommentReport
+    module:               commentReportAdmin
+    prefix_path:          /commentReportAdmin
+    column:               id
+    with_wildcard_routes: true
+
+commentAdmin:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Comment
+    module:               commentAdmin
+    prefix_path:          /commentAdmin
+    column:               id
+    with_wildcard_routes: true

@@ -1,0 +1,67 @@
+options:
+  collate: utf8_unicode_ci
+  charset: utf8
+Comment:
+  actAs:
+    Timestampable:
+  columns:
+    record_model:
+      type: string(255)
+      notnull: true
+<?php if( sfConfig::get( 'app_vjCommentPlugin_guardbind', false ) ):  ?>
+    user_id:
+      type: integer
+      notnull: false
+<?php endif; ?>
+    record_id:
+      type: integer
+      notnull: true
+    author_name:
+      type: string(255)
+      notnull: true
+    author_email:
+      type: string(255)
+    author_website:
+      type: string(255)
+      extra: link
+    body:
+      type: clob
+      notnull: true
+    is_delete:
+      type: boolean
+      default: false
+    edition_reason:
+      type: clob
+    reply:
+      type: integer
+  relations:
+    Comment: { local: reply, foreign: id }
+<?php if( sfConfig::get( 'app_vjCommentPlugin_guardbind', false ) ):  ?>
+    sfGuardUser:
+      alias: User
+      local: user_id
+      type: one
+      foreign: id
+      foreignType: many
+      foreignAlias: Comments
+<?php endif; ?>
+
+
+CommentReport:
+  actAs:
+    Timestampable:
+  columns:
+    reason:
+      type: clob
+      notnull: true
+    referer:
+      type: string(255)
+    state:
+      type: enum
+      values: [valid, invalid, untreated]
+      default: untreated
+    id_comment:
+      type: integer
+      notnull: true
+  relations:
+    Comment: { onDelete: cascade, local: id_comment, foreign: id }

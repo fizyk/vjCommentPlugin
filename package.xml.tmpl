@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="##ENCODING##"?>
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.4.1" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+  <name>vjCommentPlugin</name>
+  <channel>plugins.symfony-project.org</channel>
+  <summary>Comment behavior + comment's administration and moderation</summary>
+  <description>You want to add comments on news page, pool or anything ? Just use this plugin ! It provides a comment behavior. Now, everything is commentable !</description>
+  <lead>
+    <name>Jean-Philippe MORVAN</name>
+    <user>jp_morvan</user>
+    <email>jp.morvan@ville-villejuif.fr</email>
+    <active>yes</active>
+  </lead>
+  <developer>
+    <name>Grzegorz Śliwiński</name>
+    <user>fizyk</user>
+    <email>fizyk@fizyk.net.pl</email>
+    <active>yes</active>
+  </developer>
+  <developer>
+    <name>Richard D Shank</name>
+    <user>IamPersistent</user>
+    <email>richard@indiependencemusic.net</email>
+    <active>yes</active>
+  </developer>
+  <date>##CURRENT_DATE##</date>
+  <version>
+    <release>##PLUGIN_VERSION##</release>
+    <api>##API_VERSION##</api>
+  </version>
+  <stability>
+    <release>##STABILITY##</release>
+    <api>##STABILITY##</api>
+  </stability>
+  <license uri="http://www.symfony-project.org/license">MIT license</license>
+  <notes>-</notes>
+  <contents>
+    ##CONTENTS##
+  </contents>
+  <dependencies>
+    <required>
+      <php>
+        <min>5.2.4</min>
+      </php>
+      <pearinstaller>
+        <min>1.4.1</min>
+      </pearinstaller>
+      <package>
+        <name>symfony</name>
+        <channel>pear.symfony-project.com</channel>
+        <min>1.3.0</min>
+        <max>1.5.0</max>
+        <exclude>1.5.0</exclude>
+      </package>
+    </required>
+  </dependencies>
+  <phprelease></phprelease>
+  <changelog>
+    <release>
+      <version>
+        <release>1.1.4</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>stable</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.symfony-project.org/license">MIT license</license>
+      <date>2010-05-31</date>
+      <license>MIT</license>
+      <notes>
+        * fizyk: fixed issue where logged users username was not copied into the reply field
+        * IamPersistent: fixed issue so reply username is added to the reply comment
+      </notes>
+    </release>
+    <release>
+      <version>
+        <release>1.1.3</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>stable</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.symfony-project.org/license">MIT license</license>
+      <date>2010-05-23</date>
+      <license>MIT</license>
+      <notes>
+        * fizyk: fixed package.xml.tmpl file
+        * fizyk: fixed xhtml compatibility
+        * fizyk: updated polish translation (vjComment i18n#7)
+      </notes>
+    </release>
+    <release>
+      <version>
+        <release>1.1.1</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>stable</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.symfony-project.org/license">MIT license</license>
+      <date>2010-04-22</date>
+      <license>MIT</license>
+      <notes>
+        * jp_morvan: add italian translation (thanks to Alessandro Rossi)
+      </notes>
+    </release>
+    <release>
+      <version>
+        <release>1.1.0</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>stable</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.symfony-project.org/license">MIT license</license>
+      <date>2010-04-14</date>
+      <license>MIT</license>
+      <notes>
+        * fizyk: changed conditions in templates, form and component to use new vjComment class
+        * fizyk: added class with static method to handle common check conditions
+        * jp_morvan: remove report link when comment is already deleted
+        * jp_morvan: remove author name, email and website from adminComment's edit and reply when sfGuardUser's model used
+        * jp_morvan: add username from adminComment's edit and reply when sfGuardUser's model used
+        * fizyk: added setting that allows adding relation bewteen comment and sfGuardUser, so it will no longer be mandatory to use sfGuardUser.
+        * fizyk: integrated functionality to make use of sfGuardUser
+        * fizyk: added relation to sfGuardUser
+        * jp_morvan: add option to define gravatar's directories (by default : sf_web_dir/sf_upload_dir/g_cache)
+      </notes>
+    </release>
+    <release>
+      <version>
+        <release>1.0.4</release>
+        <api>1.0.0</api>
+      </version>
+      <stability>
+        <release>stable</release>
+        <api>stable</api>
+      </stability>
+      <license uri="http://www.symfony-project.org/license">MIT license</license>
+      <date>2010-03-29</date>
+      <license>MIT</license>
+      <notes>
+        * jp_morvan: move messages.fr.xml, sf_admin.fr.xml and vjComment.fr.xml to fr/messages.xml, fr/sf_admin.xml and fr/vjComment.xml
+        * fizyk: add polish translation
+      </notes>
+    </release>
+  </changelog>
+</package>
