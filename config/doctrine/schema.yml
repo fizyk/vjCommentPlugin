@@ -8,11 +8,6 @@ Comment:
     record_model:
       type: string(255)
       notnull: true
-<?php if( sfConfig::get( 'app_vjCommentPlugin_guardbind', false ) ):  ?>
-    user_id:
-      type: integer
-      notnull: false
-<?php endif; ?>
     record_id:
       type: integer
       notnull: true
@@ -34,6 +29,11 @@ Comment:
       type: clob
     reply:
       type: integer
+<?php if( sfConfig::get( 'app_vjCommentPlugin_guardbind', false ) ):  ?>
+    user_id:
+      type: integer(4)
+      notnull: false
+<?php endif; ?>
   relations:
     Comment: { local: reply, foreign: id }
 <?php if( sfConfig::get( 'app_vjCommentPlugin_guardbind', false ) ):  ?>

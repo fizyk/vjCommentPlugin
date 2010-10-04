@@ -14,6 +14,8 @@ abstract class PluginCommentForm extends PluginCommentCommonForm
   public function setup()
   {
     parent::setup();
+    
+    $user = $this->getOption('user');
 
     unset($this['id'],$this['is_active'], $this['is_delete'], $this['created_at'], $this['updated_at'], $this['edition_reason']);
     $this->widgetSchema['reply_author'] = new sfWidgetFormInputText(array(), array('readonly' => "readonly"));
@@ -21,7 +23,7 @@ abstract class PluginCommentForm extends PluginCommentCommonForm
     $this->widgetSchema->setHelp('author_email', __('Your email will never be published', array(), 'vjComment'));
     $this->widgetSchema['user_id'] = new sfWidgetFormInputHidden();
 
-    if( vjComment::isUserBoundAndAuthenticated() )
+    if( vjComment::isUserBoundAndAuthenticated($user) )
     {
         unset( $this['author_email'], $this['author_website'], $this['author_name'] );
     }
@@ -29,7 +31,7 @@ abstract class PluginCommentForm extends PluginCommentCommonForm
     {
         unset( $this['user_id'] );
     }
-    if (vjComment::isCaptchaEnabled() && !vjComment::isUserBoundAndAuthenticated() )
+    if (vjComment::isCaptchaEnabled() && !vjComment::isUserBoundAndAuthenticated($user) )
     {
       $this->addCaptcha();
     }

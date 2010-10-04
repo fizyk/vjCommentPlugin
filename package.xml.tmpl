@@ -57,6 +57,31 @@
   <changelog>
     <release>
       <version>
+        <release>##PLUGIN_VERSION##</release>
+        <api>##API_VERSION##</api>
+      </version>
+      <stability>
+        <release>##STABILITY##</release>
+        <api>##STABILITY##</api>
+      </stability>
+      <license uri="http://www.symfony-project.org/license">MIT license</license>
+      <date>##CURRENT_DATE##</date>
+      <license>MIT</license>
+      <notes>
+        * jp_morvan: reintegrate italian translation disapeared on previous version
+        * jp_morvan: pagination on comments added
+        * jp_morvan: allow the sort order of displayed comments listings (ASC or DESC)
+        * jp_morvan: change routing.yml to listener for the routes
+        * jp_morvan: update some route's names (comment_reported, comment_reporting)
+        * jp_morvan: option to set Profile methods to retrieve name, website and email address automatically
+        * jp_morvan: add output escaping on frontend and backend by default to prevent XSS
+        * jp_morvan: update method getAllComments($order) on Commentable Template to non executed method
+        * jp_morvan: add current url in form action
+        * jp_morvan: minor updates on templates and classe's methods
+      </notes>
+    </release>
+    <release>
+      <version>
         <release>1.1.4</release>
         <api>1.0.0</api>
       </version>
@@ -103,7 +128,7 @@
       <date>2010-04-22</date>
       <license>MIT</license>
       <notes>
-        * jp_morvan: add italian translation (thanks to Alessandro Rossi)
+        * jp_morvan: add italian translation
       </notes>
     </release>
     <release>

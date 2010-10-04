@@ -10,6 +10,16 @@
  */
 class commentTools
 {
+  protected static $patterns = array(
+      'QUOTE_START'   => '<blockquote>',
+      'QUOTE_END'     => '</blockquote>',
+      'DIV_START'     => '<div>',
+      'DIV_END'       => '</div>',
+      'STRONG_START'  => '<strong>',
+      'STRONG_END'    => '</strong>',
+      'BREAK'         => '<br />'
+  );
+
   /**
    * Transform datetime to mktime
    *
@@ -45,7 +55,13 @@ class commentTools
   public static function setQuote($author, $body)
   {
     return <<<EOF
-<blockquote><div><strong>$author</strong></div>$body</blockquote><br />
+%%QUOTE_START%%
+  %%DIV_START%%
+    %%STRONG_START%%$author%%STRONG_END%%
+  %%DIV_END%%
+  $body
+%%QUOTE_END%%
+%%BREAK%%
 EOF;
   }
 
@@ -55,52 +71,55 @@ EOF;
    * @param string $content Message
    * @return string Message without blockquote and cut down
    */
-  public static function cleanQuote($content = "")
+  public static function cleanQuote($content = "", $cut = false)
   {
-    $content = substr(strip_tags(self::removeBlockquote($content)), 0, sfConfig::get('app_commentAdmin_max_length', 50));
-    if(strlen($content) == sfConfig::get('app_commentAdmin_max_length', 50))
+    if(preg_match("/%{2}BREAK%{2}/", $content))
     {
-      $content .= " ...";
+      $content = substr(strip_tags(strrchr($content, '%%BREAK%%')), 1);
+    }
+    if($cut === true)
+    {
+      $content = substr($content, 0, sfConfig::get('app_commentAdmin_max_length', 50));
+      if(strlen($content) == sfConfig::get('app_commentAdmin_max_length', 50))
+      {
+        $content .= " ...";
+      }
     }
     return $content;
   }
 
   /**
-   * Replace HTML line breaks with nothing
+   * Translates patterns for blockquote to HTML tags
    *
-   * @param string $string The string to format
-   * @return string The string with HTML line breaks removed
+   * @param string
+   * @return string 
    */
-  public static function removeBr($string)
+  public static function parseQuoting($string)
   {
-    return str_replace("<br />", "", $string);
-  }
-
-  /**
-   * Remove blockquote form string
-   *
-   * @param string $string A string
-   * @return string The string without blockquote
-   */
-  public static function removeBlockquote($string)
-  {
-    $text = explode("</blockquote>", $string);
-    if(count($text) > 1)
+    foreach(self::$patterns as $pattern => $replace)
     {
-      $string = $text[count($text) - 1];
+      $exp = "/%{2}$pattern%{2}/";
+      if(preg_match($exp, $string, $matches))
+      {
+        $string = preg_replace($exp, $replace, $string);
+      }
     }
     return $string;
   }
 
-  /**
-   * Combinaison of removeBr and removeBlockquote
-   *
-   * @param string $string A string
-   * @return string The string without blockquote and HTML line breaks
-   */
-  public static function removeBrAndBlockquote($string)
+  public static function rewriteUrlForPage($uri, $page)
   {
-    return self::removeBr(self::removeBlockquote($string));
+    $exp = '/page=(\d+)/';
+    if(preg_match($exp, $uri))
+    {
+      $uri = preg_replace($exp, 'page='.$page, $uri);
+    }
+    else
+    {
+      $uri .= (strstr($uri, "?") === false)? "?" : "&";
+      $uri .= 'page='.$page;
+    }
+    return $uri;
   }
 }
 ?>

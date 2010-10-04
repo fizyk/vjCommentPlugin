@@ -5,9 +5,9 @@
     <label for="comment_reply_message"><?php echo __('Reply message', array(), 'sf_admin') ?></label>
     <div class="content">
       <a class="info">
-        <?php echo commentTools::cleanQuote($comment->getBody(ESC_RAW)) ?>
+        <?php echo commentTools::cleanQuote($comment->getBody()) ?>
         <span class="body">
-          <?php echo $comment->getBody(ESC_RAW) ?>
+          <?php echo commentTools::parseQuoting($comment->getBody()) ?>
         </span>
       </a>
     </div>

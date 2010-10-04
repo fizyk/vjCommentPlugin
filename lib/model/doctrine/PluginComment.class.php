@@ -12,13 +12,59 @@ abstract class PluginComment extends BaseComment
 {
     public function getAuthor()
     {
-        if( null !== $this->getUserId() )
+      if(!is_null($this->getUserId()))
+      {
+        if(
+          ($profile = $this->getProfileAlias()) !== false &&
+          ($field = vjComment::getProfileInformation('field_name')) !== false
+        )
         {
-            return $this->getUser()->getUsername();
+          return $profile->{'get'.$field}();
         }
         else
         {
-            return $this->getAuthorName();
+          return $this->getUser()->getUsername();
         }
+      }
+      return $this->getAuthorName();
+    }
+
+    public function getEmail()
+    {
+      if(!is_null($this->getUserId()))
+      {
+        if(
+          ($profile = $this->getProfileAlias()) !== false &&
+          ($field = vjComment::getProfileInformation('field_email')) !== false
+        )
+        {
+          return $profile->{'get'.$field}();
+        }
+      }
+      return $this->getAuthorEmail();
+    }
+
+    public function getWebsite()
+    {
+      if(!is_null($this->getUserId()))
+      {
+        if(
+          ($profile = $this->getProfileAlias()) !== false &&
+          ($field = vjComment::getProfileInformation('field_website')) !== false
+        )
+        {
+          return $profile->{'get'.$field}();
+        }
+      }
+      return $this->getAuthorWebsite();
+    }
+
+    public function getProfileAlias()
+    {
+      if(($alias = vjComment::getProfileInformation('alias')))
+      {
+        return $this->getUser()->{'get'.$alias}();
+      }
+      return false;
     }
 }

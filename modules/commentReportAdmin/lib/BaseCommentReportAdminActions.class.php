@@ -64,7 +64,7 @@ class BaseCommentReportAdminActions extends autoCommentReportAdminActions
 
   public function executeEditComment(sfWebRequest $request)
   {
-    $this->redirect(array('sf_route' => 'commentAdmin_edit', 'sf_subject' => $this->getRoute()->getObject()));
+    $this->redirect(array('sf_route' => 'commentAdmin_edit', 'sf_subject' => $this->getRoute()->getObject()->getComment()));
   }
 
   public function executeDeleteComment(sfWebRequest $request)

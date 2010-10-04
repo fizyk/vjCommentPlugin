@@ -7,6 +7,10 @@ table.list-comments td.author, table.list-comments td.report, table.list-comment
   padding-top: 5px;
 }
 
+table.list-comments tr.first_line td{
+  border-top: none;
+}
+
 table.list-comments td.author span.author{
   font-weight: bold;
 }

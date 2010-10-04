@@ -1,0 +1,16 @@
+img{
+  border:0;
+}
+
+div.pagination{
+  width:500px;
+  text-align: center;
+  font-weight: bold;
+  color: #000000;
+  background-color: #cccccc;
+}
+
+div.pagination a{
+  color: #000000;
+  font-weight: normal;
+}

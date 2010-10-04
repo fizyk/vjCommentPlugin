@@ -10,7 +10,7 @@
  */
 class BaseCommentActions extends sfActions
 {
-  public function executeReport(sfWebRequest $request)
+  public function executeReporting(sfWebRequest $request)
   {
     $this->form = new CommentReportForm(null, array(
                                 'id_comment'  => $request->getParameter('id'),
@@ -23,12 +23,12 @@ class BaseCommentActions extends sfActions
       if ($this->form->isValid())
       {
         $this->form->save();
-        $this->redirect("@commentReportSent");
+        $this->redirect("@comment_reported");
       }
     }
   }
 
-  public function executeReportSent(sfWebRequest $request)
+  public function executeReported(sfWebRequest $request)
   {
   }
 }

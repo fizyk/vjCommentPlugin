@@ -4,8 +4,8 @@
 <?php $sf_user->setAttribute('nextComment', $object->getNbComments()+1) ?>
 <a name="top"></a>
 <div class="form-comment">
-<?php if( vjComment::checkAccessToForm() ): ?>
-  <form action="" method="post">
+<?php if( vjComment::checkAccessToForm($sf_user) ): ?>
+  <form action="<?php echo url_for($sf_request->getUri()) ?>" method="post">
   <fieldset>
     <legend><?php echo __('Add new comment', array(), 'vjComment') ?></legend>
     <?php include_partial("comment/form", array('form' => $form)) ?>

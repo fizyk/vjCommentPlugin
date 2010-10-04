@@ -67,7 +67,30 @@ Add the form and/or the list of comments wherever you want
 And ... that's all !
 You only need to get your object and to pass it to the template and two components do the rest.
 
-Logged users and comments
+Changing the sort order of displayed comments
+-------------
+
+It's possible to set the sort order of displayed comments to either DESC (newest on top) or ASC (oldest on top):
+
+  * edit apps/your_frontend_app/config/app.yml
+
+        all:
+          vjCommentPlugin:
+            list_order: ASC #or DESC
+
+Activate pagination on comments list
+-------------
+
+  * edit apps/your_frontend_app/config/app.yml
+
+        all:
+          vjCommentPlugin:
+            #false by default
+            pagination_active: true
+            #10 by default
+            max_per_page: 5
+
+Logged users, comments and profile options
 -------------
 
 Since 1.1.0 we've added setting, that would allow you to connect sfGuardUser with comments:
@@ -87,6 +110,20 @@ After changing this setting, make sure create migrations:
     $ ./symfony doctrine:build --all-classes
 
 Second setting if set to true restricts comments only to logged in user.
+
+You can define options to retrieve email and website address or name in profile object :
+
+  * edit apps/your_frontend_app/config/app.yml
+
+        all:
+          vjCommentPlugin:
+            profile:
+              # alias between user and profiles tables
+              alias: Profile
+              # name of the fields used to retrieve name, email and website informations
+              field_name: Name
+              field_email: Email
+              field_website : Website
 
 How to enable reCaptcha
 -------------
@@ -198,13 +235,15 @@ To use french :
 TODO
 -------------
 
-* Integrate the tests provided
+* Storing name, email address and website in session or cookie
+* set gravatar to call from gravatar website, OR use custom method to retrieve avatars. (trying to set folder outside of web/ for uploads makes it tricky to use gravatars).
+* Find a way to connect Comments with Commentable object through relation.
+* Special fields and listener for sfGuardUser and models
 
 
 Thanks
 -------------
-A really thanks to [fizyk](http://www.symfony-project.org/plugins/developer/grzegorz-liwiski) for all his comments,
-the polish translation and especially for all his great ideas !
+Special thank to Choong Wei Tjeng for his patch.
 
 
 Contact

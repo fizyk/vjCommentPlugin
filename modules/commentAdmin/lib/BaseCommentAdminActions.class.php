@@ -20,9 +20,7 @@ class BaseCommentAdminActions extends autoCommentAdminActions
 
   public function executeIsDelete(sfWebRequest $request)
   {
-    $comment = $this->getRoute()->getObject()
-                                    ->setIsDelete(true)
-                                    ->save();
+    $this->getRoute()->getObject()->setIsDelete(true)->save();
     $this->getUser()->setFlash('notice', 'The item was deleted successfully.');
     $this->redirect('@commentAdmin');
   }
@@ -37,7 +35,7 @@ class BaseCommentAdminActions extends autoCommentAdminActions
   {
     $this->comment = $this->getRoute()->getObject();
     $this->form = $this->configuration->getForm($this->comment);
-    $this->form->setDefault('body', commentTools::removeBrAndBlockquote($this->comment->body));
+    $this->form->setDefault('body', commentTools::cleanQuote($this->comment->body));
   }
 
   public function executeCreate(sfWebRequest $request)
@@ -70,10 +68,7 @@ class BaseCommentAdminActions extends autoCommentAdminActions
 
   public function executeRestore(sfWebRequest $request)
   {
-    $comment = $this->getRoute()->getObject()
-                                    ->setIsDelete(false)
-                                    ->setEditionReason(null)
-                                    ->save();
+    $this->getRoute()->getObject()->setIsDelete(false)->setEditionReason(null)->save();
     $this->getUser()->setFlash('notice', __('The item was restored successfully.', array(), 'sf_admin'));
     $this->redirect('@commentAdmin');
   }

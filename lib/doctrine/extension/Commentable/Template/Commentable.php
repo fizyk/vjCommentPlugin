@@ -26,17 +26,17 @@ class Doctrine_Template_Commentable extends Doctrine_Template
     return $this->_invoker;
   }
 
-  public function getAllComments()
+  public function getAllComments($order = 'ASC')
   {
-    return $comments = $this->getCommentsQuery()->execute();
+    return $this->getCommentsQuery($order);
   }
 
-  public function getCommentsQuery()
+  public function getCommentsQuery($order = 'ASC')
   {
     $query = Doctrine::getTable('Comment')->createQuery('c')
       ->where('c.record_id = ?', $this->_invoker->get('id'))
       ->andWhere('c.record_model = ?', $this->_invoker->getTable()->getComponentName())
-      ->orderBy('c.created_at ASC');
+      ->orderBy('c.created_at '.strtoupper($order));
 
     if(sfConfig::get( 'app_vjCommentPlugin_guardbind', false ))
     {

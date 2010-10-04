@@ -11,20 +11,20 @@ class vjComment
    * @return boolean
    * @author fizyk
    */
-  static function isUserBoundAndAuthenticated()
+  static function isUserBoundAndAuthenticated($user)
   {
-      return sfContext::getInstance()->getUser()->isAuthenticated() && sfConfig::get( 'app_vjCommentPlugin_guardbind', false );
+    return $user->isAuthenticated() && sfConfig::get( 'app_vjCommentPlugin_guardbind', false );
   }
 
   /**
    * Check wheter or not the comment form can be accessed
    * @return boolean
    */
-  static function checkAccessToForm()
+  static function checkAccessToForm($user)
   {
       if( sfConfig::get( 'app_vjCommentPlugin_restricted' ) )
       {
-          return vjComment::isUserBoundAndAuthenticated();
+          return vjComment::isUserBoundAndAuthenticated($user);
       }
       else
       {
@@ -40,6 +40,68 @@ class vjComment
   static function isCaptchaEnabled()
   {
     return sfConfig::get('app_recaptcha_enabled');
+  }
+
+  /**
+   *
+   * @return boolean
+   * @author jp_morvan
+   */
+  static function isPaginationEnabled()
+  {
+    return sfConfig::get('app_vjCommentPlugin_pagination_active', false);
+  }
+
+  /**
+   * Get the number of comments to be displayed on each page
+   *
+   * @return integer
+   * @author jp_morvan
+   */
+  static function getMaxPerPage(Doctrine_Query $query)
+  {
+    if(self::isPaginationEnabled())
+    {
+      return sfConfig::get('app_vjCommentPlugin_max_per_page', 10);
+    }
+    return $query->execute()->count();
+  }
+
+  /**
+   * Get the list order for the comments (ASC by default)
+   *
+   * @return string
+   * @author jp_morvan
+   */
+  static function getListOrder()
+  {
+    return sfConfig::get('app_vjCommentPlugin_list_order', 'ASC');
+  }
+
+  /**
+   *
+   * @return boolean
+   * @author jp_morvan
+   */
+  static function hasProfileInformations()
+  {
+    return sfConfig::has('app_vjCommentPlugin_profile');
+  }
+
+  /**
+   * Get the profile information selected if exist, else return false
+   *
+   * @return mixed
+   * @author jp_morvan
+   */
+  static function getProfileInformation($key)
+  {
+    if(!self::hasProfileInformations())
+    {
+      return false;
+    }
+    $informations = sfConfig::get('app_vjCommentPlugin_profile');
+    return (isset($informations[$key]))? $informations[$key]: false;
   }
 }
 ?>

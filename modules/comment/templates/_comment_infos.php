@@ -8,12 +8,12 @@
           <?php echo link_to_function(
                 image_tag('/vjCommentPlugin/images/error.png', array( 'alt' => 'report' )) ,
                 'window.open(
-                  \''.url_for('@commentReport?id='.$obj->getId().'&num='.$i).'\',
+                  \''.url_for('@comment_reporting?id='.$obj->getId().'&num='.$i).'\',
                   \''.__('Add new comment', array(), 'vjComment').'\',
                     "menubar=no, status=no, scrollbars=no, menubar=no, width=565, height=300")',
                 array('target' => '_blank', 'title' => __('Report this comment - New window', array(), 'vjComment') )) ?><br />
         <?php endif; ?>
         <?php if(commentTools::isGravatarAvailable() && !$obj->is_delete): ?>
-          <?php echo gravatar_image_tag($obj->getAuthorEmail()) ?>
+          <?php echo gravatar_image_tag($obj->getEmail()) ?>
         <?php endif ?>
       </td>
