@@ -140,6 +140,10 @@
         <source>(page %%page%%/%%nb_pages%%)</source>
         <target>(page %%page%%/%%nb_pages%%)</target>
       </trans-unit>
+      <trans-unit>
+        <source>Back to top</source>
+        <target>Retour en haut</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

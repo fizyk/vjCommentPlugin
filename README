@@ -90,6 +90,26 @@ Activate pagination on comments list
             #10 by default
             max_per_page: 5
 
+How to allow or disallow HTML tags in comments
+-------------
+
+Before 1.2.0 version, we used ESC_RAW to render comment's content and only used blockquote, div, br and strong HTML tags.
+In 1.2.0, we let your escaping strategy working but in most of the cases, HTML tags were escaped.
+
+Since 1.2.1, we've introduced HTML Purifier to do the job. The plugin embeds version 4.2.0 of the library (released on 2010-09-15).
+By default, we allow blockquote, strong, div and br tags but you can override these.
+
+  * edit apps/your_frontend_app/config/app.yml
+
+        all:
+          purifier:
+            #set to false use only your allowed tags
+            merge: true
+            #by default, [blockquote,strong,div,br] are allowed
+            #set to [i,u] with merge to true allows [blockquote,strong,div,br,i,u]
+            #set to [] with merge to false disables allowed tags
+            allowed_tags: [i,u]
+
 Logged users, comments and profile options
 -------------
 

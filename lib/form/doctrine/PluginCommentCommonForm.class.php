@@ -65,6 +65,8 @@ class PluginCommentCommonForm extends BaseCommentForm
     {
       $values['reply'] = null;
     }
+    $purifier = new vjCommentPurifier();
+    $values['body'] = $purifier->purify($values['body']);
     parent::doUpdateObject($values);
   }
 }

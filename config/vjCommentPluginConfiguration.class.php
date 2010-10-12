@@ -7,6 +7,8 @@
  */
 class vjCommentPluginConfiguration extends sfPluginConfiguration
 {
+  static protected $HTMLPurifierLoaded = false;
+  
   /**
    * @see sfPluginConfiguration
    */
@@ -21,5 +23,19 @@ class vjCommentPluginConfiguration extends sfPluginConfiguration
     {
       $this->dispatcher->connect('routing.load_configuration', array('vjCommentRouting', 'addRouteForAdminReportedComments'));
     }
+    self::registerHTMLPurifier();
+  }
+
+  static public function registerHTMLPurifier()
+  {
+    if(self::$HTMLPurifierLoaded) {
+      return;
+    }
+
+    require_once(sfConfig::get('sf_plugins_dir').'/vjCommentPlugin/lib/tools/htmlpurifier/library/HTMLPurifier/Bootstrap.php');
+
+    spl_autoload_register(array('HTMLPurifier_Bootstrap', 'autoload'));
+
+    self::$HTMLPurifierLoaded = true;
   }
 }

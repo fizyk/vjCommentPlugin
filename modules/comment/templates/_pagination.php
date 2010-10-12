@@ -1,4 +1,7 @@
 <div class="pagination">
+<?php if($position == "back"): ?>
+<?php include_partial('comment/back_to_top', array('route' => $route, 'text' => false)) ?>
+<?php endif; ?>
   <a href="<?php echo url_for(commentTools::rewriteUrlForPage($route, 1)) ?>">
     <?php echo image_tag('/vjCommentPlugin/images/resultset_first.png', array('alt' => __('First page of comments', array(), 'vjComment'), 'title' => __('First page of comments', array(), 'vjComment'))) ?>
   </a>

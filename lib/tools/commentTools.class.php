@@ -55,13 +55,13 @@ class commentTools
   public static function setQuote($author, $body)
   {
     return <<<EOF
-%%QUOTE_START%%
-  %%DIV_START%%
-    %%STRONG_START%%$author%%STRONG_END%%
-  %%DIV_END%%
+<blockquote>
+  <div>
+    <strong>$author</strong>
+  </div>
   $body
-%%QUOTE_END%%
-%%BREAK%%
+</blockquote>
+<br />
 EOF;
   }
 
@@ -73,9 +73,9 @@ EOF;
    */
   public static function cleanQuote($content = "", $cut = false)
   {
-    if(preg_match("/%{2}BREAK%{2}/", $content))
+    if(preg_match("/<br />/", $content))
     {
-      $content = substr(strip_tags(strrchr($content, '%%BREAK%%')), 1);
+      $content = substr(strip_tags(strrchr($content, '<br />')), 1);
     }
     if($cut === true)
     {
@@ -94,18 +94,18 @@ EOF;
    * @param string
    * @return string 
    */
-  public static function parseQuoting($string)
-  {
-    foreach(self::$patterns as $pattern => $replace)
-    {
-      $exp = "/%{2}$pattern%{2}/";
-      if(preg_match($exp, $string, $matches))
-      {
-        $string = preg_replace($exp, $replace, $string);
-      }
-    }
-    return $string;
-  }
+//  public static function parseQuoting($string)
+//  {
+//    foreach(self::$patterns as $pattern => $replace)
+//    {
+//      $exp = "/%{2}$pattern%{2}/";
+//      if(preg_match($exp, $string, $matches))
+//      {
+//        $string = preg_replace($exp, $replace, $string);
+//      }
+//    }
+//    return $string;
+//  }
 
   public static function rewriteUrlForPage($uri, $page)
   {
@@ -119,7 +119,7 @@ EOF;
       $uri .= (strstr($uri, "?") === false)? "?" : "&";
       $uri .= 'page='.$page;
     }
-    return $uri;
+    return $uri."#comments";
   }
 }
 ?>

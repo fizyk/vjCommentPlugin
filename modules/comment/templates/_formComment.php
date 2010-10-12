@@ -2,7 +2,7 @@
 <?php use_stylesheet("/vjCommentPlugin/css/form.min.css") ?>
 <?php use_stylesheet("/vjCommentPlugin/css/formComment.min.css") ?>
 <?php $sf_user->setAttribute('nextComment', $object->getNbComments()+1) ?>
-<a name="top"></a>
+<a name="comments"></a>
 <div class="form-comment">
 <?php if( vjComment::checkAccessToForm($sf_user) ): ?>
   <form action="<?php echo url_for($sf_request->getUri()) ?>" method="post">
