@@ -15,7 +15,7 @@ class BaseCommentComponents extends sfComponents
     $this->form = new CommentForm(null, array('user' => $this->getUser()));
     $this->form->setDefault('record_model', $this->object->getTable()->getComponentName());
     $this->form->setDefault('record_id', $this->object->get('id'));
-    if($request->isMethod('post'))
+    if($request->isMethod('post') && $request->hasParameter('comment'))
     {
       //preparing temporary array with sent values
       $formValues = $request->getParameter($this->form->getName());
