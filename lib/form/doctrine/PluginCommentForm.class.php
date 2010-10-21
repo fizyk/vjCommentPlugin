@@ -17,7 +17,16 @@ abstract class PluginCommentForm extends PluginCommentCommonForm
     
     $user = $this->getOption('user');
 
-    unset($this['id'],$this['is_active'], $this['is_delete'], $this['created_at'], $this['updated_at'], $this['edition_reason']);
+    $this->useFields(array(
+      'record_model',
+      'record_id',
+      'author_name',
+      'author_email',
+      'author_website',
+      'body',
+      'reply',
+      'user_id'
+    ));
     $this->widgetSchema['reply_author'] = new sfWidgetFormInputText(array(), array('readonly' => "readonly"));
     $this->widgetSchema->setLabel('reply_author', __('Reply to', array(), 'vjComment'));
     $this->widgetSchema->setHelp('author_email', __('Your email will never be published', array(), 'vjComment'));
