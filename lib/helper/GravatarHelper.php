@@ -12,9 +12,15 @@
 function gravatar_image_tag($email, $gravatar_rating = null, $gravatar_size = null, $alt_text = 'Gravatar photo')
 {
   $gravatar = new GravatarApi($gravatar_rating, $gravatar_size);
-  // return the gravatar image
 
-  return image_tag($gravatar->getGravatar($email),
+  $image = $gravatar->getGravatar($email);
+
+  if($image === false)
+  {
+    return "";
+  }
+
+  return image_tag($image,
                    array('alt' => $alt_text,
                          'width' => sfConfig::get('app_gravatar_default_size', 80),
                          'height' => sfConfig::get('app_gravatar_default_size', 80),

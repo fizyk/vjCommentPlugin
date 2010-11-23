@@ -25,6 +25,7 @@ class GravatarApi
 
   protected $image_size, $rating, $cache_dir;
   protected $cache_dir_name;
+  protected $default_dir_name;
 
   protected $base_url = "http://www.gravatar.com";
   // gravatar ratings are only : G | PG | R | X
@@ -32,6 +33,7 @@ class GravatarApi
 
   public function __construct($image_size = null, $rating = null)
   {
+    $this->default_image = sfConfig::get('app_gravatar_default_image', sfConfig::get('sf_plugins_dir').'/vjCommentPlugin/web/images/gravatar_default.png');
     $this->setDirectories();
     if (!is_dir($this->cache_dir))
     {
@@ -41,7 +43,6 @@ class GravatarApi
       }
     }
 
-    $this->default_image = sfConfig::get('app_gravatar_default_image', 'gravatar_default.png');
     $this->expire_ago = sfConfig::get('app_gravatar_cache_expiration', '3 days');
 
     if (is_null($image_size) || $image_size > 80 || $image_size < 1)
@@ -154,8 +155,15 @@ class GravatarApi
       }
       else
       {
-        // no gravatar --> get the default one
-        $path = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.$this->default_image);
+        // no gravatar --> get the plugin default one
+        $path = realpath($this->default_image);
+        if($path === false)
+        {
+          return false;
+        }
+        $dir = dirname($path).DIRECTORY_SEPARATOR;
+        $to_return = str_replace($dir, '', $path);
+        $file = $this->cache_dir.$to_return;
       }
 
       $new_file = fopen($file, 'w+b');
@@ -170,7 +178,7 @@ class GravatarApi
   protected function setDirectories()
   {
     $gravatar_cache_dir_name = sfConfig::get('app_gravatar_cache_dir_name', 'g_cache');
-    
+
     $this->cache_dir = $this->clearPath(sfConfig::get('sf_web_dir')
                         .DIRECTORY_SEPARATOR
                         .$this->getGravatarUploadDir()

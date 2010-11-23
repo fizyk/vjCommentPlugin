@@ -31,7 +31,11 @@ Comment:
       type: integer
 <?php if( sfConfig::get( 'app_vjCommentPlugin_guardbind', false ) ):  ?>
     user_id:
+<?php if( sfConfig::get('app_sfDoctrineGuardPlugin_version', 5) == 5):  ?>
+      type: integer(8)
+<?php elseif( sfConfig::get('app_sfDoctrineGuardPlugin_version', false) == 4):  ?>
       type: integer(4)
+<?php endif; ?>
       notnull: false
 <?php endif; ?>
   relations:

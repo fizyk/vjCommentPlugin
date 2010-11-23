@@ -75,7 +75,7 @@ class BaseCommentComponents extends sfComponents
     {
       $page = $this->pager->getFirstPage();
     }
-    $url = commentTools::rewriteUrlForPage($uri, $page);
+    $url = commentTools::rewriteUrlForPage($uri, $page, false);
     return  $url . "#" . $this->getUser()->getAttribute("nextComment");
   }
 }

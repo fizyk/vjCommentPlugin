@@ -88,26 +88,7 @@ EOF;
     return $content;
   }
 
-  /**
-   * Translates patterns for blockquote to HTML tags
-   *
-   * @param string
-   * @return string 
-   */
-//  public static function parseQuoting($string)
-//  {
-//    foreach(self::$patterns as $pattern => $replace)
-//    {
-//      $exp = "/%{2}$pattern%{2}/";
-//      if(preg_match($exp, $string, $matches))
-//      {
-//        $string = preg_replace($exp, $replace, $string);
-//      }
-//    }
-//    return $string;
-//  }
-
-  public static function rewriteUrlForPage($uri, $page)
+  public static function rewriteUrlForPage($uri, $page, $comment = true)
   {
     $exp = '/page=(\d+)/';
     if(preg_match($exp, $uri))
@@ -119,7 +100,11 @@ EOF;
       $uri .= (strstr($uri, "?") === false)? "?" : "&";
       $uri .= 'page='.$page;
     }
-    return $uri."#comments";
+    if($comment === true)
+    {
+      $uri.="#comments";
+    }
+    return $uri;
   }
 }
 ?>

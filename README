@@ -145,6 +145,19 @@ You can define options to retrieve email and website address or name in profile 
               field_email: Email
               field_website : Website
 
+Config for sfDoctrineGuardPlugin
+-------------
+
+The version 5.0.0 of sfDoctrineGuardPlugin introduce a big change in schema : id switched from int(4) to int(8).
+
+To integrate this change into this plugin, we added a sfDoctrineGuardPlugin version option in app.yml :
+
+        all:
+          sfDoctrineGuardPlugin:
+            version: 4 #5 by default
+
+If you have multiple applications who have commentable relation, you can create app.yml file in project's config dir (SF_ROOT_DIR/config/app.yml) and integrate this option.
+
 How to enable reCaptcha
 -------------
 
@@ -178,7 +191,7 @@ You can change default size, image or directories of gravatar
         all:
           gravatar:
             default_size:   40
-            default_image:  ../web/images/gravatar_default.png
+            default_image:  <?php echo sfConfig::get('sf_web_dir') ?>/images/gravatar_default.png
             upload_dir:     .. # by default, this uses sf_upload_dir configuration
             cache_dir_name: g_cache
 

@@ -9,7 +9,7 @@ all:
   gravatar:
     enabled:        true
     default_size:   40
-    default_image:  ../web/images/gravatar_default.png
+    #default_image:  <?php echo sfConfig::get('sf_web_dir') ?>/images/gravatar_default.png
   purifier:
     #set to false use only your allowed tags
     merge: true
