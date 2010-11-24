@@ -1,6 +1,0 @@
-# vjCommentPlugin TODO #
-
-* Storing name, email address and website in session or cookie
-* set gravatar to call from gravatar website, OR use custom method to retrieve avatars. (trying to set folder outside of web/ for uploads makes it tricky to use gravatars).
-* Find a way to connect Comments with Commentable object through relation.
-* Special fields and listener for sfGuardUser and models

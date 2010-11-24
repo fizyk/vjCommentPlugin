@@ -150,13 +150,13 @@ Config for sfDoctrineGuardPlugin
 
 The version 5.0.0 of sfDoctrineGuardPlugin introduce a big change in schema : id switched from int(4) to int(8).
 
-To integrate this change into this plugin, we added a sfDoctrineGuardPlugin version option in app.yml :
+To integrate this change into this plugin, you need to overwrite user_id's definition in project's schema definition
 
-        all:
-          sfDoctrineGuardPlugin:
-            version: 4 #5 by default
+  * with sfDoctrineGuardPlugin since 5.0.0
 
-If you have multiple applications who have commentable relation, you can create app.yml file in project's config dir (SF_ROOT_DIR/config/app.yml) and integrate this option.
+        user_id:
+          type: integer(8)
+          notnull: false
 
 How to enable reCaptcha
 -------------
