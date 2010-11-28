@@ -34,6 +34,9 @@ Comment:
       type: integer(4)
       notnull: false
 <?php endif; ?>
+  indexes:
+    record_model_record_id:
+      fields: [record_model, record_id]
   relations:
     Comment: { local: reply, foreign: id }
 <?php if( sfConfig::get( 'app_vjCommentPlugin_guardbind', false ) ):  ?>
