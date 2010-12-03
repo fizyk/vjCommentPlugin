@@ -29,7 +29,7 @@ Comment:
       type: clob
     reply:
       type: integer
-<?php if( sfConfig::get( 'app_vjCommentPlugin_guardbind', false ) ):  ?>
+<?php if(vjComment::isGuardBindEnabled()):  ?>
     user_id:
       type: integer(4)
       notnull: false
@@ -39,7 +39,7 @@ Comment:
       fields: [record_model, record_id]
   relations:
     Comment: { local: reply, foreign: id }
-<?php if( sfConfig::get( 'app_vjCommentPlugin_guardbind', false ) ):  ?>
+<?php if(vjComment::isGuardBindEnabled()):  ?>
     sfGuardUser:
       alias: User
       local: user_id

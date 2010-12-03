@@ -12,7 +12,7 @@ abstract class PluginComment extends BaseComment
 {
     public function getAuthor()
     {
-      if(!is_null($this->getUserId()))
+      if($this->isGuardBindAndUserId())
       {
         if(
           ($profile = $this->getProfileAlias()) !== false &&
@@ -31,7 +31,7 @@ abstract class PluginComment extends BaseComment
 
     public function getEmail()
     {
-      if(!is_null($this->getUserId()))
+      if($this->isGuardBindAndUserId())
       {
         if(
           ($profile = $this->getProfileAlias()) !== false &&
@@ -46,7 +46,7 @@ abstract class PluginComment extends BaseComment
 
     public function getWebsite()
     {
-      if(!is_null($this->getUserId()))
+      if($this->isGuardBindAndUserId())
       {
         if(
           ($profile = $this->getProfileAlias()) !== false &&
@@ -64,6 +64,15 @@ abstract class PluginComment extends BaseComment
       if(($alias = vjComment::getProfileInformation('alias')))
       {
         return $this->getUser()->{'get'.$alias}();
+      }
+      return false;
+    }
+
+    private function isGuardBindAndUserId()
+    {
+      if(vjComment::isGuardBindEnabled())
+      {
+        return !is_null($this->getUserId());
       }
       return false;
     }

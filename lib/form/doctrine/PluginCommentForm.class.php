@@ -16,17 +16,21 @@ abstract class PluginCommentForm extends PluginCommentCommonForm
     parent::setup();
     
     $user = $this->getOption('user');
-
-    $this->useFields(array(
+    $fields = array(
       'record_model',
       'record_id',
       'author_name',
       'author_email',
       'author_website',
       'body',
-      'reply',
-      'user_id'
-    ));
+      'reply'
+    );
+    if(vjComment::isGuardBindEnabled())
+    {
+      $fields[] = 'user_id';
+    }
+    $this->useFields($fields);
+    
     $this->widgetSchema['reply_author'] = new sfWidgetFormInputText(array(), array('readonly' => "readonly"));
     $this->widgetSchema->setLabel('reply_author', __('Reply to', array(), 'vjComment'));
     $this->widgetSchema->setHelp('author_email', __('Your email will never be published', array(), 'vjComment'));
