@@ -73,7 +73,7 @@ EOF;
    */
   public static function cleanQuote($content = "", $cut = false)
   {
-    if(preg_match("/<br />/", $content))
+    if(preg_match("/<br \/>/", $content))
     {
       $content = substr(strip_tags(strrchr($content, '<br />')), 1);
     }
