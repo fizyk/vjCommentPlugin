@@ -1,5 +1,5 @@
   <div class="backtop<?php if($text) echo " backtopmax"; ?>">
-    <a href="<?php echo url_for($route."#comments") ?>">
+    <a href="<?php echo url_for($route."#comments-".$crypt) ?>">
 <?php if($text): ?>
 <?php echo __('Back to top', array(), 'vjComment') ?>
 <?php endif; ?>

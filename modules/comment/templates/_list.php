@@ -10,7 +10,7 @@
     <h1><?php echo __('Comments list', array(), 'vjComment') ?> (<?php echo $pager->getNbResults() ?>)</h1>
   </div>
 <?php if ($pager->haveToPaginate()): ?>
-<?php include_partial('comment/pagination', array('pager' => $pager, 'route' => $sf_request->getUri(), 'position' => 'top')) ?>
+<?php include_partial('comment/pagination', array('pager' => $pager, 'route' => $sf_request->getUri(), 'crypt' => $crypt, 'position' => 'top')) ?>
 <?php endif ?>
   <table class="list-comments" summary="">
 <?php foreach($pager->getResults() as $c): ?>
@@ -18,9 +18,9 @@
 <?php endforeach; ?>
   </table>
 <?php if ($pager->haveToPaginate()): ?>
-<?php include_partial('comment/pagination', array('pager' => $pager, 'route' => $sf_request->getUri(), 'position' => 'back')) ?>
+<?php include_partial('comment/pagination', array('pager' => $pager, 'route' => $sf_request->getUri(), 'crypt' => $crypt, 'position' => 'back')) ?>
 <?php else: ?>
-<?php include_partial('comment/back_to_top', array('route' => $sf_request->getUri(), 'text' => true)) ?>
+<?php include_partial('comment/back_to_top', array('route' => $sf_request->getUri(), 'crypt' => $crypt, 'text' => true)) ?>
 <?php endif ?>
 <?php else: ?>
   <div>

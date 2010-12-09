@@ -1,8 +1,7 @@
 <?php use_helper('I18N', 'JavascriptBase') ?>
 <?php use_stylesheet("/vjCommentPlugin/css/form.min.css") ?>
 <?php use_stylesheet("/vjCommentPlugin/css/formComment.min.css") ?>
-<?php $sf_user->setAttribute('nextComment', $object->getNbComments()+1) ?>
-<a name="comments"></a>
+<a name="comments-<?php echo $crypt ?>"></a>
 <div class="form-comment">
 <?php if( vjComment::checkAccessToForm($sf_user) ): ?>
   <form action="<?php echo url_for($sf_request->getUri()) ?>" method="post">

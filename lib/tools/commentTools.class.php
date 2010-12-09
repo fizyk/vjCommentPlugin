@@ -88,17 +88,18 @@ EOF;
     return $content;
   }
 
-  public static function rewriteUrlForPage($uri, $page, $comment = true)
+  public static function rewriteUrlForPage($uri, $page, $crypt, $comment = true)
   {
-    $exp = '/page=(\d+)/';
+    $p = "page-".$crypt."=";
+    $exp = '/'.$p.'(\d+)/';
     if(preg_match($exp, $uri))
     {
-      $uri = preg_replace($exp, 'page='.$page, $uri);
+      $uri = preg_replace($exp, $p.$page, $uri);
     }
     else
     {
       $uri .= (strstr($uri, "?") === false)? "?" : "&";
-      $uri .= 'page='.$page;
+      $uri .= $p.$page;
     }
     if($comment === true)
     {

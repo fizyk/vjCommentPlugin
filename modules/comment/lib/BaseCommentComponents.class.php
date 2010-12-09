@@ -12,12 +12,9 @@ class BaseCommentComponents extends sfComponents
 {
   public function executeFormComment(sfWebRequest $request)
   {
-    $model = $this->object->getTable()->getComponentName();
-    $id = $this->object->get('id');
-    $random = md5($model.$id);
-    $this->form = new CommentForm(null, array('user' => $this->getUser(), 'name' => $random));
-    $this->form->setDefault('record_model', $model);
-    $this->form->setDefault('record_id', $id);
+    $this->form = new CommentForm(null, array('user' => $this->getUser(), 'name' => $this->generateCryptModel()));
+    $this->form->setDefault('record_model', $this->object->getTable()->getComponentName());
+    $this->form->setDefault('record_id', $this->object->get('id'));
     if($request->isMethod('post'))
     {
       //preparing temporary array with sent values
@@ -45,14 +42,9 @@ class BaseCommentComponents extends sfComponents
           $this->form->save();
           $this->initPager($request);
           $url = $this->generateNewUrl($request->getUri());
-          $this->getUser()->offsetUnset("nextComment");
           $this->getContext()->getController()->redirect($url, 0, 302);
         }
       }
-    }
-    else
-    {
-      $this->getUser()->setAttribute('has_been_saved', false);
     }
   }
 
@@ -67,7 +59,7 @@ class BaseCommentComponents extends sfComponents
     {
       $query = $this->object->getAllComments(vjComment::getListOrder());
       $max_per_page = vjComment::getMaxPerPage($query);
-      $page = $request->getParameter('page', 1);
+      $page = $request->getParameter('page-'.$this->generateCryptModel(), 1);
 
       $this->pager = new sfDoctrinePager('Comment', $max_per_page);
       $this->pager->setQuery($query);
@@ -84,7 +76,15 @@ class BaseCommentComponents extends sfComponents
     {
       $page = $this->pager->getFirstPage();
     }
-    $url = commentTools::rewriteUrlForPage($uri, $page, false);
-    return  $url . "#" . $this->getUser()->getAttribute("nextComment");
+    $url = commentTools::rewriteUrlForPage($uri, $page, $this->generateCryptModel(), false);
+    return  $url . "#" . $this->pager->getNbResults();
+  }
+
+  public function generateCryptModel()
+  {
+    $model = $this->object->getTable()->getComponentName();
+    $id = $this->object->get('id');
+    $this->crypt = vjComment::hashTo8($model.$id);
+    return $this->crypt;
   }
 }

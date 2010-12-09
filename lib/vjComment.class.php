@@ -13,7 +13,17 @@ class vjComment
    */
   static function isPostedForm($values, $form)
   {
-    return md5($values['record_model'].$values['record_id']) == $form->getName();
+    return self::hashTo8($values['record_model'].$values['record_id']) == $form->getName();
+  }
+
+  /**
+   * Generate md5 value cut to 8 characters
+   * @return string
+   * @author jp_morvan
+   */
+  static function hashTo8($value)
+  {
+    return substr(hash('md5', $value), 0, 8);
   }
 
   /**
