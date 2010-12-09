@@ -12,38 +12,47 @@ class BaseCommentComponents extends sfComponents
 {
   public function executeFormComment(sfWebRequest $request)
   {
-    $this->form = new CommentForm(null, array('user' => $this->getUser()));
-    $this->form->setDefault('record_model', $this->object->getTable()->getComponentName());
-    $this->form->setDefault('record_id', $this->object->get('id'));
-    if($request->isMethod('post') && $request->hasParameter('comment'))
+    $model = $this->object->getTable()->getComponentName();
+    $id = $this->object->get('id');
+    $random = md5($model.$id);
+    $this->form = new CommentForm(null, array('user' => $this->getUser(), 'name' => $random));
+    $this->form->setDefault('record_model', $model);
+    $this->form->setDefault('record_id', $id);
+    if($request->isMethod('post'))
     {
       //preparing temporary array with sent values
       $formValues = $request->getParameter($this->form->getName());
+      if(vjComment::isPostedForm($formValues, $this->form))
+      {
+        if( vjComment::isCaptchaEnabled() && !vjComment::isUserBoundAndAuthenticated($this->getUser()) )
+        {
+          $captcha = array(
+            'recaptcha_challenge_field' => $request->getParameter('recaptcha_challenge_field'),
+            'recaptcha_response_field'  => $request->getParameter('recaptcha_response_field'),
+          );
+          //Adding captcha
+          $formValues = array_merge( $formValues, array('captcha' => $captcha)  );
+        }
+        if( vjComment::isUserBoundAndAuthenticated($this->getUser()) )
+        {
+          //adding user id
+          $formValues = array_merge( $formValues, array('user_id' => $this->getUser()->getGuardUser()->getId() )  );
+        }
 
-      if( vjComment::isCaptchaEnabled() && !vjComment::isUserBoundAndAuthenticated($this->getUser()) )
-      {
-        $captcha = array(
-          'recaptcha_challenge_field' => $request->getParameter('recaptcha_challenge_field'),
-          'recaptcha_response_field'  => $request->getParameter('recaptcha_response_field'),
-        );
-        //Adding captcha
-        $formValues = array_merge( $formValues, array('captcha' => $captcha)  );
+        $this->form->bind( $formValues );
+        if ($this->form->isValid())
+        {
+          $this->form->save();
+          $this->initPager($request);
+          $url = $this->generateNewUrl($request->getUri());
+          $this->getUser()->offsetUnset("nextComment");
+          $this->getContext()->getController()->redirect($url, 0, 302);
+        }
       }
-      if( vjComment::isUserBoundAndAuthenticated($this->getUser()) )
-      {
-        //adding user id
-        $formValues = array_merge( $formValues, array('user_id' => $this->getUser()->getGuardUser()->getId() )  );
-      }
-
-      $this->form->bind( $formValues );
-      if ($this->form->isValid())
-      {
-        $this->form->save();
-        $this->initPager($request);
-        $url = $this->generateNewUrl($request->getUri());
-        $this->getUser()->offsetUnset("nextComment");
-        $this->getContext()->getController()->redirect($url, 0, 302);
-      }
+    }
+    else
+    {
+      $this->getUser()->setAttribute('has_been_saved', false);
     }
   }
 

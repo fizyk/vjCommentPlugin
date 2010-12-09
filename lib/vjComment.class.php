@@ -7,6 +7,16 @@
 class vjComment
 {
   /**
+   * Checks if the form is the one posted
+   * @return boolean
+   * @author jp_morvan
+   */
+  static function isPostedForm($values, $form)
+  {
+    return md5($values['record_model'].$values['record_id']) == $form->getName();
+  }
+
+  /**
    * Checks wheter user is authenticated, and the sfGuardPlugin bound to commentable
    * @return boolean
    * @author fizyk
