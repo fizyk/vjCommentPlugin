@@ -13,7 +13,7 @@ class vjComment
    */
   static function isUserBoundAndAuthenticated($user)
   {
-    return $user->isAuthenticated() && sfConfig::get( 'app_vjCommentPlugin_guardbind', false );
+    return $user->isAuthenticated() && self::isGuardBindEnabled();
   }
 
   /**
@@ -86,6 +86,16 @@ class vjComment
   static function hasProfileInformations()
   {
     return sfConfig::has('app_vjCommentPlugin_profile');
+  }
+
+  /**
+   *
+   * @return boolean
+   * @author jp_morvan
+   */
+  static function isGuardBindEnabled()
+  {
+    return sfConfig::get( 'app_vjCommentPlugin_guardbind', false );
   }
 
   /**

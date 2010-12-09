@@ -13,19 +13,8 @@ abstract class PluginCommentFormFilter extends BaseCommentFormFilter
   public function setup()
   {
     parent::setup();
-    $choices = $this->getRecordModelChoices();
-    $this->widgetSchema['record_model'] = new sfWidgetFormChoice(array('choices' => $choices));
-    $this->validatorSchema['record_model'] = new sfValidatorChoice(array('required' => false, 'choices' => $choices));
-  }
-
-  private function getRecordModelChoices()
-  {
-    $choices = array('' => '');
-    foreach(Doctrine::getTable('Comment')->getAllModels() as $m)
-    {
-      $choices[$m['record_model']] = $m['record_model'];
-    }
-    return $choices;
+    $this->widgetSchema['record_model'] = new sfWidgetFormDoctrineChoice(array('model' => 'Comment', 'key_method' => 'getRecordModel', 'method' => 'getRecordModel', 'add_empty' => true));
+    $this->validatorSchema['record_model'] = new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Comment', 'column' => 'record_model'));
   }
 
   public function addRecordModelColumnQuery($query, $field, $value)

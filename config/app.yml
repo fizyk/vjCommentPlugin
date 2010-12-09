@@ -1,9 +1,9 @@
 all:
   recaptcha:
     enabled:        false
-  vjCommentPlugin:
-    guardbind: false
-    restricted: false
+#  vjCommentPlugin:
+#    guardbind: false
+#    restricted: false
   commentAdmin:
     max_length:     50
   gravatar:
