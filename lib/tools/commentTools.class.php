@@ -65,28 +65,33 @@ class commentTools
 EOF;
   }
 
-  /**
-   * Remove HTML tags, blockquote part and cut down
-   *
-   * @param string $content Message
-   * @return string Message without blockquote and cut down
-   */
-  public static function cleanQuote($content = "", $cut = false)
-  {
-    if(preg_match("/<br \/>/", $content))
+    /**
+     * Remove HTML tags, blockquote part and cut down
+     *
+     * @param string $content Message
+     * @return string Message without blockquote and cut down
+     */
+    public static function cleanQuote($content = "", $cut = false)
     {
-      $content = substr(strip_tags(strrchr($content, '<br />')), 1);
+        # remove blockquotes
+        $new_content = preg_replace("/(<blockquote.*<\/blockquote>)/", '', $content);
+        # we're jus replacing old with new if there wasn't any errors before
+        if($new_content != null)
+        {
+            $content = $new_content;
+        }
+        # we're stripping all tags, and possibly remove whitespaces
+        $content = trim(strip_tags($content));
+        if($cut === true)
+        {
+            $content = substr($content, 0, sfConfig::get('app_commentAdmin_max_length', 50));
+            if(strlen($content) == sfConfig::get('app_commentAdmin_max_length', 50))
+            {
+                $content .= " ...";
+            }
+        }
+        return $content;
     }
-    if($cut === true)
-    {
-      $content = substr($content, 0, sfConfig::get('app_commentAdmin_max_length', 50));
-      if(strlen($content) == sfConfig::get('app_commentAdmin_max_length', 50))
-      {
-        $content .= " ...";
-      }
-    }
-    return $content;
-  }
 
   public static function rewriteUrlForPage($uri, $page, $crypt, $comment = true)
   {
