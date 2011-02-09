@@ -10,4 +10,19 @@
  */
 class commentAdminGeneratorConfiguration extends BaseCommentAdminGeneratorConfiguration
 {
+
+    public function getFilterForm($filters)
+    {
+        if(!array_key_exists('is_delete', $filters))
+        {
+            $filters['is_delete'] = 0;
+        }
+        return parent::getFilterForm($filters);
+    }
+    
+    public function getFilterDefaults()
+    {
+        return array('is_delete' => 0);
+    }
+
 }
