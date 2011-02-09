@@ -74,7 +74,7 @@ EOF;
     public static function cleanQuote($content = "", $cut = false)
     {
         # remove blockquotes
-        $new_content = preg_replace("/(<blockquote.*<\/blockquote>)/", '', $content);
+        $new_content = preg_replace("/(<blockquote.*<\/blockquote>)/is", '', $content);
         # we're jus replacing old with new if there wasn't any errors before
         if($new_content != null)
         {

@@ -1,1 +1,2 @@
 *.svn
+lib/tools/htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer/HTML/*
