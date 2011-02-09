@@ -10,13 +10,25 @@
  */
 class PluginCommentTable extends Doctrine_Table
 {
-  public function getAllModels()
-  {
-    $q = Doctrine_Query::create()
-          ->select('record_model')
-          ->from('Comment')
-          ->groupBy('record_model')
-          ->execute(array(), Doctrine::HYDRATE_ARRAY);
-    return $q;
-  }
+
+    public function getAllModels()
+    {
+        $q = Doctrine_Query::create()
+                        ->select('record_model')
+                        ->from('Comment')
+                        ->groupBy('record_model')
+                        ->execute(array(), Doctrine::HYDRATE_ARRAY);
+        return $q;
+    }
+
+    public function getAdminQuery(Doctrine_Query $q)
+    {
+        $ra = $q->getRootAlias($q);
+        if(vjComment::isGuardBindEnabled())
+        {
+            $q->leftJoin($ra . '.User u');
+        }
+        return $q;
+    }
+
 }
