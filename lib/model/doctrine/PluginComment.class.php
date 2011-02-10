@@ -67,6 +67,11 @@ abstract class PluginComment extends BaseComment
       }
       return false;
     }
+    
+    public function getBodyCleanQuotes()
+    {
+        return commentTools::cleanQuote($this->getBody());
+    }
 
     private function isGuardBindAndUserId()
     {

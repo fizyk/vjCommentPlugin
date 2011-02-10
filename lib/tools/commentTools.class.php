@@ -80,16 +80,6 @@ EOF;
         {
             $content = $new_content;
         }
-        # we're stripping all tags, and possibly remove whitespaces
-        $content = trim(strip_tags($content));
-        if($cut === true)
-        {
-            $content = substr($content, 0, sfConfig::get('app_commentAdmin_max_length', 50));
-            if(strlen($content) == sfConfig::get('app_commentAdmin_max_length', 50))
-            {
-                $content .= " ...";
-            }
-        }
         return $content;
     }
 

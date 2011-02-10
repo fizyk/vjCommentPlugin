@@ -35,7 +35,7 @@ class BaseCommentAdminActions extends autoCommentAdminActions
   {
     $this->comment = $this->getRoute()->getObject();
     $this->form = $this->configuration->getForm($this->comment);
-    $this->form->setDefault('body', commentTools::cleanQuote($this->comment->body));
+    $this->form->setDefault('body', str_replace(array('<br/>', '<br />', '<br>'), '', $this->comment->getBodyCleanQuotes()));
   }
 
   public function executeCreate(sfWebRequest $request)
