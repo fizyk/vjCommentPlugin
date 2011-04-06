@@ -53,13 +53,13 @@ class BaseCommentAdminActions extends autoCommentAdminActions
     $this->form->setDefault('record_model', $comment->record_model);
     $this->form->setDefault('record_id', $comment->record_id);
     $this->form->setDefault('reply', $comment->id);
-    if($comment->user_id != null)
+    $author = $comment->author_name;
+    if(vjComment::isGuardBindEnabled())
     {
-      $author = $comment->getUser()->username;
-    }
-    else
-    {
-      $author = $comment->author_name;
+      if($comment->user_id != null)
+      {
+        $author = $comment->getUser()->username;
+      }
     }
     $this->form->setDefault('reply_author', $author);
     $this->comment  = $this->form->getObject();
