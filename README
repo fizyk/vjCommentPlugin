@@ -64,6 +64,13 @@ Add the form and/or the list of comments wherever you want
         <?php include_component('comment', 'formComment', array('object' => $yourModelsObject)) ?>
         <?php include_component('comment', 'list', array('object' => $yourModelsObject, 'i' => 0)) ?>
 
+The comment form component send datas in POST method. So, make sure that your routes for pages including the comment form component contains post method like this :
+
+    route_to_commentable_action:
+        ...
+        requirements:
+           sf_method: [...,post]
+
 And ... that's all !
 You only need to get your object and to pass it to the template and two components do the rest.
 

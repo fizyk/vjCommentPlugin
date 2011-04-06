@@ -3,7 +3,7 @@
         <?php if(!$obj->is_delete): ?>
           <?php echo link_to_function(
                   image_tag('/vjCommentPlugin/images/comments.png', array( 'alt' => 'reply' )) ,
-                  "reply('".$obj->getId()."','".$obj->getAuthor()."')",
+                  "reply('".$obj->getId()."','".$obj->getAuthor()."', '".$form_name."')",
                   array('title' => __('Reply to this comment', array(), 'vjComment'))) ?>
           <?php echo link_to_function(
                 image_tag('/vjCommentPlugin/images/error.png', array( 'alt' => 'report' )) ,

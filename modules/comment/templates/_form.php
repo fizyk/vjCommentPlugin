@@ -13,7 +13,7 @@
         <td><?php echo $f->renderError() ?></td>
       </tr>
     <?php endif ?>
-    <tr id="tr_<?php echo $id ?>">
+    <tr id="tr_<?php echo $id."_".$form->getName() ?>" class="tr_<?php echo $id ?>">
       <th>
         <?php echo $f->renderLabel(null, $attributes) ?>
       </th>
@@ -23,8 +23,8 @@
       </td>
     </tr>
     <?php if($id == "reply_author"): ?>
-    <tr id="tr_reply_author_delete">
-      <td colspan="2"><?php echo link_to_function(__("Delete the reply", array(), 'vjComment'), "deleteReply()", array('class' => 'delete_reply'))."\n" ?></td>
+    <tr id="tr_reply_author_delete_<?php echo $form->getName() ?>" class="tr_reply_author_delete">
+      <td colspan="2"><?php echo link_to_function(__("Delete the reply", array(), 'vjComment'), "deleteReply('".$form->getName()."')", array('class' => 'delete_reply'))."\n" ?></td>
     </tr>
     <?php endif ?>
   <?php endif ?>

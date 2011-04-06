@@ -14,7 +14,7 @@
 <?php endif ?>
   <table class="list-comments" summary="">
 <?php foreach($pager->getResults() as $c): ?>
-<?php include_partial("comment/comment", array('obj' => $c, 'i' => (++$i + $cpt), 'first_line' => ($i == 1))) ?>
+<?php include_partial("comment/comment", array('obj' => $c, 'i' => (++$i + $cpt), 'first_line' => ($i == 1), 'form_name' => $form_name)) ?>
 <?php endforeach; ?>
   </table>
 <?php if ($pager->haveToPaginate()): ?>

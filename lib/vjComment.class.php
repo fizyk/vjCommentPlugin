@@ -13,7 +13,17 @@ class vjComment
    */
   static function isPostedForm($values, $form)
   {
-    return self::hashTo8($values['record_model'].$values['record_id']) == $form->getName();
+    return self::getFormName($values['record_model'].$values['record_id']) == $form->getName();
+  }
+
+  /**
+   * Get the name of the form generated with hash
+   * @return string
+   * @author jp_morvan
+   */
+  static function getFormName($values)
+  {
+    return 'comment_'.self::hashTo8($values);
   }
 
   /**

@@ -7,7 +7,7 @@ div.form-comment input, div.form-comment textarea{
   width:350px;
 }
 
-div.form-comment tr#tr_reply_author, div.form-comment tr#tr_reply_author_delete{
+div.form-comment tr.tr_reply_author, div.form-comment tr.tr_reply_author_delete{
   display: none;
 }
 
