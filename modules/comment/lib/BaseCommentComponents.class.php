@@ -51,6 +51,7 @@ class BaseCommentComponents extends sfComponents
   public function executeList(sfWebRequest $request)
   {
     $this->initPager($request);
+    $this->form_name = $this->generateCryptModel();
   }
 
   private function initPager(sfWebRequest $request)
@@ -84,7 +85,7 @@ class BaseCommentComponents extends sfComponents
   {
     $model = $this->object->getTable()->getComponentName();
     $id = $this->object->get('id');
-    $this->crypt = vjComment::hashTo8($model.$id);
+    $this->crypt = vjComment::getFormName($model.$id);
     return $this->crypt;
   }
 }

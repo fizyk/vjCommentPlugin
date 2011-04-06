@@ -48,7 +48,7 @@ abstract class PluginCommentForm extends PluginCommentCommonForm
     {
       $this->addCaptcha();
     }
-    $this->widgetSchema->setNameFormat('comment_'.$this->getOption('name').'[%s]');
+    $this->widgetSchema->setNameFormat($this->getOption('name').'[%s]');
   }
 
   protected function addCaptcha()
