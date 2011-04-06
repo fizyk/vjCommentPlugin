@@ -34,7 +34,7 @@ generator:
           _delete: ~
           restore:          { label: Restore }
       filter:
-        display:            [id, is_delete, record_model, user_id, author_name, author_email, author_website, body, created_at]
+        display:            [id, is_delete, record_model<?php if(vjComment::isGuardBindEnabled()) echo ', user_id' ?>, author_name, author_email, author_website, body, created_at]
       form:
         display:
           Author:           [author_name, author_email, author_website, user_name]
